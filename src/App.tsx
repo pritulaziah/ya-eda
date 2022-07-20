@@ -1,24 +1,20 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-
 function App() {
+  const panels = [
+    "bg-slate-50",
+    "bg-slate-100",
+    "bg-slate-200",
+    "bg-slate-300",
+    "bg-slate-400",
+  ];
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="flex flex-col divide-y divide-black">
+      {panels.map((color, index) => (
+        <div
+          key={index}
+          className={`flex justify-center items-center min-h-screen ${color}`}
+        >{`Panel ${index}`}</div>
+      ))}
     </div>
   );
 }
