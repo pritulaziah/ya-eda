@@ -1,5 +1,5 @@
 function App() {
-  const panels = [
+  const sections = [
     "bg-slate-50",
     "bg-slate-100",
     "bg-slate-200",
@@ -8,14 +8,14 @@ function App() {
   ];
 
   return (
-    <div className="flex flex-col divide-y divide-black">
-      {panels.map((color, index) => (
-        <div
+    <main className="flex flex-col divide-y divide-black">
+      {sections.map((color, index) => (
+        <section
           key={index}
           className={`flex justify-center items-center min-h-screen ${color}`}
-        >{`Panel ${index}`}</div>
+        >{`Section ${index}`}</section>
       ))}
-    </div>
+    </main>
   );
 }
 
