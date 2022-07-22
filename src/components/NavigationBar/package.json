@@ -1,0 +1,4 @@
+{
+  "name": "NavigationBar",
+  "main": "./NavigationBar.tsx"
+}
