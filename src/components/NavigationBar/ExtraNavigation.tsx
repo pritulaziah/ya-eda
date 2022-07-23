@@ -31,7 +31,7 @@ const ExtraNavigation = ({
   );
 
   const onChangeExpanded = (event: React.MouseEvent<HTMLDivElement>) => {
-    event.stopPropagation(); // stop bubbling
+    event.stopPropagation(); // stop bubbling react
     setExpanded((prevState) => !prevState);
   };
 
@@ -42,14 +42,26 @@ const ExtraNavigation = ({
   return (
     <div
       onClick={onChangeExpanded}
-      className="flex content-end items-center cursor-pointer relative text-gray-900"
+      className={clsx([
+        "flex",
+        "content-end",
+        "items-center",
+        "cursor-pointer",
+        "relative",
+        "text-gray-700",
+        "transition-colors",
+        expanded ? "text-gray-300" : "hover:text-slate-900",
+      ])}
     >
       <span>Ещё</span>
       <span
-        className={clsx(
-          "ml-2 text-xs flex transition-transform",
-          expanded ? "rotate-180" : "rotate-0"
-        )}
+        className={clsx([
+          "ml-2",
+          "text-xs",
+          "flex",
+          "transition-transform",
+          expanded ? "rotate-180" : "rotate-0",
+        ])}
       >
         <FontAwesomeIcon icon="chevron-down" />
       </span>
