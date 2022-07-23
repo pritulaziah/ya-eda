@@ -42,7 +42,7 @@ const ExtraNavigation = ({
   return (
     <div
       onClick={onChangeExpanded}
-      className="flex content-end items-center cursor-pointer relative"
+      className="flex content-end items-center cursor-pointer relative text-gray-900"
     >
       <span>Ещё</span>
       <span

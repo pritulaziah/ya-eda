@@ -13,7 +13,7 @@ const NavigationItem = React.forwardRef<HTMLLIElement, IProps>(
       <li
         ref={ref}
         onClick={handleClick}
-        className="flex px-4 h-full text-center items-center"
+        className="flex px-4 h-full text-center items-center text-gray-900"
       >
         {children}
       </li>
