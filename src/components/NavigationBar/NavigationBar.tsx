@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useCallback } from "react";
+import React, { useRef, useEffect } from "react";
 import { useState } from "react";
 import ExtraNavigation from "./ExtraNavigation";
 import NavigationItem from "./NavigationItem";
@@ -13,7 +13,6 @@ interface IProps {
 
 const NavigationBar = ({ navigations }: IProps) => {
   const navigationRef = useRef<HTMLUListElement>(null);
-  const [expandedExtra, setExpandedExtra] = useState(false);
   const [extraIndex, setExtraIndex] = useState(-1);
   const navigationRefs = useRef<React.RefObject<HTMLLIElement>[]>(
     navigations.map(() => React.createRef<HTMLLIElement>())
@@ -42,10 +41,6 @@ const NavigationBar = ({ navigations }: IProps) => {
     setExtraIndex(currentExtraIndex - 1);
   }, [navigations]);
 
-  const onChangeExpandedExtra = useCallback(() => {
-    setExpandedExtra((prevState) => !prevState);
-  }, []);
-
   return (
     <div className="border-gray-200 border-solid border-b flex px-20 text-gray-900">
       <ul
@@ -62,8 +57,6 @@ const NavigationBar = ({ navigations }: IProps) => {
         <ExtraNavigation
           navigations={navigations}
           extraIndex={extraIndex}
-          expanded={expandedExtra}
-          onChangeExpanded={onChangeExpandedExtra}
           navigationRefs={navigationRefs}
         />
       )}

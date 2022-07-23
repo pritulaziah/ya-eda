@@ -1,37 +1,24 @@
-import React, { useRef } from "react";
-import NavigationItem from "./NavigationItem";
+import React, { useRef, useState } from "react";
 import { INavigationItem } from "./NavigationBar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import clsx from "clsx";
 import { CSSTransition } from "react-transition-group";
-import useClickOutside from "hooks/useClickOutside";
+import ExtraNavigationList from "./ExtraNavigationList";
 import { useCallback } from "react";
 
 interface IProps {
   extraIndex: number;
   navigations: INavigationItem[];
-  expanded: boolean;
-  onChangeExpanded: () => void;
   navigationRefs: React.RefObject<React.RefObject<HTMLLIElement>[]>;
 }
 
 const ExtraNavigation = ({
   navigations,
-  expanded,
-  onChangeExpanded,
   navigationRefs,
   extraIndex,
 }: IProps) => {
-  const extraNavigationRef = useRef<HTMLUListElement>(null);
-
-  const a = useCallback(
-    (event: any) => {
-      expanded && onChangeExpanded();
-    },
-    [expanded]
-  );
-
-  useClickOutside(extraNavigationRef, a);
+  const [expanded, setExpanded] = useState(false);
+  const extraNavigationListRef = useRef<HTMLUListElement>(null);
   const extraNavigations = navigations.slice(extraIndex);
   const extraNavigationRefs = navigationRefs.current?.slice(extraIndex) || [];
   // Из-за абсолютного позиционирования под элементом,
@@ -42,6 +29,15 @@ const ExtraNavigation = ({
     ),
     0
   );
+
+  const onChangeExpanded = (event: React.MouseEvent<HTMLDivElement>) => {
+    event.stopPropagation(); // stop bubbling
+    setExpanded((prevState) => !prevState);
+  };
+
+  const onCloseExpanded = useCallback(() => {
+    setExpanded(false);
+  }, [setExpanded]);
 
   return (
     <div
@@ -67,17 +63,14 @@ const ExtraNavigation = ({
           exit: "opacity-100",
           exitActive: "opacity-0 scale-90 transition",
         }}
-        nodeRef={extraNavigationRef}
+        nodeRef={extraNavigationListRef}
       >
-        <ul
-          style={{ width: `${maxWidth}px` }}
-          ref={extraNavigationRef}
-          className="absolute flex flex-col shadow-md rounded-3xl bg-white left-2/4 top-full -translate-x-1/2"
-        >
-          {extraNavigations.map(({ title }, index) => (
-            <NavigationItem key={index}>{title}</NavigationItem>
-          ))}
-        </ul>
+        <ExtraNavigationList
+          width={maxWidth}
+          navigations={extraNavigations}
+          onClose={onCloseExpanded}
+          ref={extraNavigationListRef}
+        />
       </CSSTransition>
     </div>
   );

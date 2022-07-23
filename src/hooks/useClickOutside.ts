@@ -17,7 +17,6 @@ const useClickOutside = <
     }
 
     function handleClickOutside(event: DocumentEventMap[K]) {
-      console.log("Yo");
       if (!(targetElement as T).contains(event.target as Node)) {
         onClickOutside(event);
       }
