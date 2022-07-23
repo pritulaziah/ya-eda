@@ -1,15 +1,25 @@
 import clsx from "clsx";
 import React from "react";
-import { INavigationItem } from "./NavigationBar";
+import { MenuCategoryNavigationItem } from "types/MenuList";
 
-interface IProps extends Omit<INavigationItem, "title"> {
-  children: React.ReactNode;
+interface IProps {
+  item: MenuCategoryNavigationItem;
   className?: React.HTMLAttributes<HTMLElement>["className"];
 }
 
 const NavigationItem = React.forwardRef<HTMLLIElement, IProps>(
-  ({ children, className }, ref) => {
-    const handleClick = () => {};
+  ({ item, className }, ref) => {
+    const handleClick = () => {
+      const elementToScroll = document.querySelector(
+        `[data-category-id="${item.id}"]`
+      );
+
+      if (elementToScroll) {
+        const y =
+          elementToScroll.getBoundingClientRect().top + window.scrollY - 70;
+        window.scrollTo({ top: y, behavior: "smooth" });
+      }
+    };
 
     return (
       <li
@@ -29,7 +39,7 @@ const NavigationItem = React.forwardRef<HTMLLIElement, IProps>(
           className,
         ])}
       >
-        {children}
+        {item.title}
       </li>
     );
   }

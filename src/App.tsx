@@ -1,43 +1,14 @@
 import NavigationBar from "components/NavigationBar";
 import MenuList from "components/MenuList";
-
-const navigations = [
-  {
-    title: "Вы заказывали",
-  },
-  {
-    title: "Новинки",
-  },
-  {
-    title: "Баскеты",
-  },
-  {
-    title: "Бургеры",
-  },
-  {
-    title: "Твистеры",
-  },
-  {
-    title: "Сочная курица",
-  },
-  {
-    title: "Картофель и Снэки",
-  },
-  {
-    title: "Соусы",
-  },
-  {
-    title: "Холодные напитки",
-  },
-];
+import { v4 as uuidv4 } from "uuid";
 
 const menuCategories = [
   {
-    id: 1,
+    id: uuidv4(),
     title: "Новинки",
     menu: [
       {
-        id: 1,
+        id: uuidv4(),
         title: "Чикен Пита",
         gram: 210,
         description:
@@ -48,11 +19,11 @@ const menuCategories = [
     ],
   },
   {
-    id: 2,
+    id: uuidv4(),
     title: "Баскеты",
     menu: [
       {
-        id: 1,
+        id: uuidv4(),
         title: "Баскет S 12 Острых Крыльев",
         description:
           "12 Крылышек в острой панировке.<br> На 100 граммов: К 304, Б 19.6, Ж 20.8, У 9.8",
@@ -60,14 +31,14 @@ const menuCategories = [
         price: 459,
       },
       {
-        id: 2,
+        id: uuidv4(),
         title: 'Баскет Острый "Крылышки и Ножки"',
         description: "6 Острых крылышек + 4 Острых ножки",
         image: "/3525402/9079d30c4323cc4b6ebd7422b2734940-450x300.png",
         price: 459,
       },
       {
-        id: 3,
+        id: uuidv4(),
         title: 'Баскет "12 Острых Крыльев + 12 Наггетсов"',
         description:
           "12 Острых крылышек + 12 Наггетсов.<br>На 100 граммов: К 390, Б 23.1, Ж 26, У 15.9",
@@ -77,6 +48,11 @@ const menuCategories = [
     ],
   },
 ];
+
+const navigations = menuCategories.map((menuCategory) => ({
+  id: menuCategory.id,
+  title: menuCategory.title,
+}));
 
 function App() {
   return (

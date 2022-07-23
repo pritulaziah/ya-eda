@@ -1,14 +1,13 @@
-import React, { useRef, useState } from "react";
-import { INavigationItem } from "./NavigationBar";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import React, { useRef, useState, useCallback } from "react";
 import clsx from "clsx";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { CSSTransition } from "react-transition-group";
+import { MenuCategoryNavigationItem } from "types/MenuList";
 import ExtraNavigationList from "./ExtraNavigationList";
-import { useCallback } from "react";
 
 interface IProps {
   extraIndex: number;
-  navigations: INavigationItem[];
+  navigations: MenuCategoryNavigationItem[];
   navigationRefs: React.RefObject<React.RefObject<HTMLLIElement>[]>;
 }
 

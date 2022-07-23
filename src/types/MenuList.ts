@@ -1,5 +1,5 @@
 export interface MenuItem {
-  id: number;
+  id: string;
   title: string;
   gram?: number;
   description: string;
@@ -8,7 +8,10 @@ export interface MenuItem {
 }
 
 export interface MenuCategory {
-  id: number;
+  id: string;
   title: string;
   menu: MenuItem[];
 }
+
+export interface MenuCategoryNavigationItem
+  extends Omit<MenuCategory, "menu"> {}

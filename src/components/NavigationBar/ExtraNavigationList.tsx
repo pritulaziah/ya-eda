@@ -1,12 +1,12 @@
 import React, { MutableRefObject } from "react";
 import useClickOutside from "hooks/useClickOutside";
 import NavigationItem from "./NavigationItem";
-import { INavigationItem } from "./NavigationBar";
+import { MenuCategoryNavigationItem } from "types/MenuList";
 import clsx from "clsx";
 
 interface IProps {
   width: number;
-  navigations: INavigationItem[];
+  navigations: MenuCategoryNavigationItem[];
   onClose: () => void;
 }
 
@@ -31,18 +31,17 @@ const ExtraNavigationList = React.forwardRef<HTMLUListElement, IProps>(
           "overflow-auto",
         ])}
       >
-        {navigations.map(({ title }, index) => (
+        {navigations.map((navigationItem) => (
           <NavigationItem
-            key={index}
+            key={navigationItem.id}
+            item={navigationItem}
             className={clsx([
               "py-4",
               "bg-transparent",
               "hover:bg-gray-100",
               "transition-colors",
             ])}
-          >
-            {title}
-          </NavigationItem>
+          />
         ))}
       </ul>
     );
