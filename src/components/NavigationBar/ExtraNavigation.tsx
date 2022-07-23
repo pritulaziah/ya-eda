@@ -55,13 +55,13 @@ const ExtraNavigation = ({
       </span>
       <CSSTransition
         in={expanded}
-        timeout={300}
+        timeout={100}
         unmountOnExit
         classNames={{
           enter: "opacity-0",
-          enterActive: "opacity-0 translate-x-0 transition",
+          enterActive: "opacity-0 translate-x-0 transition duration-100",
           exit: "opacity-100",
-          exitActive: "opacity-0 scale-90 transition",
+          exitActive: "opacity-0 scale-90 transition duration-100",
         }}
         nodeRef={extraNavigationListRef}
       >
@@ -77,5 +77,7 @@ const ExtraNavigation = ({
 };
 
 const MemoizedExtraNavigation = React.memo(ExtraNavigation);
+
+ExtraNavigation.displayName = "ExtraNavigation";
 
 export default MemoizedExtraNavigation;

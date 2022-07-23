@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useCallback } from "react";
 import { useState } from "react";
 import ExtraNavigation from "./ExtraNavigation";
 import NavigationItem from "./NavigationItem";
@@ -18,7 +18,7 @@ const NavigationBar = ({ navigations }: IProps) => {
     navigations.map(() => React.createRef<HTMLLIElement>())
   );
 
-  useEffect(() => {
+  const getExtraIndex = useCallback(() => {
     const { current: navigation } = navigationRef;
 
     if (!navigation) {
@@ -39,7 +39,16 @@ const NavigationBar = ({ navigations }: IProps) => {
     });
 
     setExtraIndex(currentExtraIndex - 1);
-  }, [navigations]);
+  }, [setExtraIndex, navigationRef]);
+
+  useEffect(() => {
+    window.addEventListener("resize", getExtraIndex);
+    getExtraIndex();
+
+    return () => {
+      window.removeEventListener("resize", getExtraIndex);
+    };
+  }, [getExtraIndex]);
 
   return (
     <div className="border-gray-200 border-solid border-b flex px-20 text-gray-900">
