@@ -1,15 +1,15 @@
 import MenuItem from "./MenuItem";
-import { MenuCategory as IMenuCategory } from "types/MenuList";
+import { RestorantMenuCategory } from "types/RestaurantMenu";
 
 interface IProps {
-  category: IMenuCategory;
+  category: RestorantMenuCategory;
 }
 
 const MenuCategory = ({ category }: IProps) => {
   return (
     <div
       key={category.id}
-      className="flex flex-col mb-5 last-of-type:mb-0 cursor-pointer"
+      className="flex flex-col mb-10 last-of-type:mb-0 cursor-pointer"
       data-category-id={category.id}
     >
       <div className="flex items-center mb-4">

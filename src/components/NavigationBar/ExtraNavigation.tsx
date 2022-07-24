@@ -2,12 +2,12 @@ import React, { useRef, useState, useCallback } from "react";
 import clsx from "clsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { CSSTransition } from "react-transition-group";
-import { MenuCategoryNavigationItem } from "types/MenuList";
+import { RestorantMenuCategoryNavigationItem } from "types/RestaurantMenu";
 import ExtraNavigationList from "./ExtraNavigationList";
 
 interface IProps {
   extraIndex: number;
-  navigations: MenuCategoryNavigationItem[];
+  navigations: RestorantMenuCategoryNavigationItem[];
   navigationRefs: React.RefObject<React.RefObject<HTMLLIElement>[]>;
 }
 

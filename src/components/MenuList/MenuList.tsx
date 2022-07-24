@@ -1,8 +1,8 @@
-import { MenuCategory as IMenuCategory } from "types/MenuList";
+import { RestorantMenuCategory } from "types/RestaurantMenu";
 import MenuCategory from "./MenuCategory";
 
 interface IProps {
-  menuCategories: IMenuCategory[];
+  menuCategories: RestorantMenuCategory[];
 }
 
 const MenuList = ({ menuCategories }: IProps) => {

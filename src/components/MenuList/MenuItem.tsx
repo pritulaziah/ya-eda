@@ -1,7 +1,7 @@
-import { MenuItem as IMenuItem } from "types/MenuList";
+import { RestorantMenuItem } from "types/RestaurantMenu";
 
 interface IProps {
-  item: IMenuItem;
+  item: RestorantMenuItem;
 }
 
 const MenuItem = ({ item }: IProps) => {
@@ -10,11 +10,13 @@ const MenuItem = ({ item }: IProps) => {
       <div className="mb-2 flex justify-between text-lg">
         <div className="flex items-center">
           <h4>{item.title}</h4>
-          {item.gram && (
-            <span className="text-sm text-gray-400 ml-2">{`${item.gram} г`}</span>
+          {item.weight && (
+            <span className="text-sm text-gray-400 ml-2">{`${item.weight} г`}</span>
           )}
         </div>
-        <span className="whitespace-nowrap">{`${item.price} ₽`}</span>
+        {item.price && (
+          <span className="whitespace-nowrap">{`${item.price} ₽`}</span>
+        )}
       </div>
       <div
         className="text-gray-500 text-sm mb-6"

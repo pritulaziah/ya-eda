@@ -1,25 +1,43 @@
 import clsx from "clsx";
-import React from "react";
-import { MenuCategoryNavigationItem } from "types/MenuList";
+import React, { MutableRefObject } from "react";
+import { useEffect } from "react";
+import getElementCoords from "utils/getElementCoords";
+import { RestorantMenuCategoryNavigationItem } from "types/RestaurantMenu";
 
 interface IProps {
-  item: MenuCategoryNavigationItem;
+  item: RestorantMenuCategoryNavigationItem;
   className?: React.HTMLAttributes<HTMLElement>["className"];
+  active: boolean;
 }
 
 const NavigationItem = React.forwardRef<HTMLLIElement, IProps>(
-  ({ item, className }, ref) => {
+  ({ item, className, active }, ref) => {
     const handleClick = () => {
       const elementToScroll = document.querySelector(
         `[data-category-id="${item.id}"]`
       );
 
       if (elementToScroll) {
-        const y =
-          elementToScroll.getBoundingClientRect().top + window.scrollY - 70;
+        const y = getElementCoords(elementToScroll).top + window.scrollY - 70;
         window.scrollTo({ top: y, behavior: "smooth" });
       }
     };
+
+    useEffect(() => {
+      const { current: navItem } =
+        ref as MutableRefObject<HTMLLIElement | null>;
+
+      if (active && navItem) {
+        document.documentElement.style.setProperty(
+          "--markerWidth",
+          `${navItem.offsetWidth}px`
+        );
+        document.documentElement.style.setProperty(
+          "--markerLeft",
+          `${navItem.offsetLeft}px`
+        );
+      }
+    }, [active]);
 
     return (
       <li
@@ -33,10 +51,10 @@ const NavigationItem = React.forwardRef<HTMLLIElement, IProps>(
           "items-center",
           "text-gray-700",
           "cursor-pointer",
-          "hover:text-slate-900",
           "transition-colors",
           "whitespace-nowrap",
           className,
+          active ? "text-slate-900" : "hover:text-slate-900",
         ])}
       >
         {item.title}

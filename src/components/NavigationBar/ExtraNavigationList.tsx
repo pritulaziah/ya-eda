@@ -1,12 +1,12 @@
 import React, { MutableRefObject } from "react";
 import useClickOutside from "hooks/useClickOutside";
-import NavigationItem from "./NavigationItem";
-import { MenuCategoryNavigationItem } from "types/MenuList";
 import clsx from "clsx";
+import { RestorantMenuCategoryNavigationItem } from "types/RestaurantMenu";
+import NavigationItem from "./NavigationItem";
 
 interface IProps {
   width: number;
-  navigations: MenuCategoryNavigationItem[];
+  navigations: RestorantMenuCategoryNavigationItem[];
   onClose: () => void;
 }
 
@@ -41,6 +41,7 @@ const ExtraNavigationList = React.forwardRef<HTMLUListElement, IProps>(
               "hover:bg-gray-100",
               "transition-colors",
             ])}
+            active={false}
           />
         ))}
       </ul>
