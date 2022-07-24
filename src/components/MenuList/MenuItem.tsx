@@ -24,7 +24,7 @@ const MenuItem = ({ item }: IProps) => {
       />
       <div className="flex flex-1">
         <img
-          className="w-full h-full"
+          className="w-full h-full object-contain"
           src={`https://eda.yandex/images${item.image}`}
         />
       </div>
