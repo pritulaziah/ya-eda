@@ -8,10 +8,11 @@ interface IProps {
   width: number;
   navigations: RestorantMenuCategoryNavigationItem[];
   onClose: () => void;
+  activeSelectionId: number | null;
 }
 
 const ExtraNavigationList = React.forwardRef<HTMLUListElement, IProps>(
-  ({ width, navigations, onClose }, ref) => {
+  ({ width, navigations, onClose, activeSelectionId }, ref) => {
     useClickOutside(ref as MutableRefObject<HTMLUListElement>, onClose);
 
     return (
@@ -31,19 +32,23 @@ const ExtraNavigationList = React.forwardRef<HTMLUListElement, IProps>(
           "overflow-auto",
         ])}
       >
-        {navigations.map((navigationItem) => (
-          <NavigationItem
-            key={navigationItem.id}
-            item={navigationItem}
-            className={clsx([
-              "py-4",
-              "bg-transparent",
-              "hover:bg-gray-100",
-              "transition-colors",
-            ])}
-            active={false}
-          />
-        ))}
+        {navigations.map((navigationItem) => {
+          const active = navigationItem.id === activeSelectionId;
+
+          return (
+            <NavigationItem
+              key={navigationItem.id}
+              item={navigationItem}
+              className={clsx([
+                "py-4",
+                "hover:bg-gray-100",
+                "transition-colors",
+                active ? "bg-gray-100" : "bg-transparent hover:bg-gray-100",
+              ])}
+              active={active}
+            />
+          );
+        })}
       </ul>
     );
   }

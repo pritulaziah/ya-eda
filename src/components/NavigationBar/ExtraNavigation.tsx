@@ -1,91 +1,114 @@
-import React, { useRef, useState, useCallback } from "react";
+import React, {
+  useRef,
+  useState,
+  useCallback,
+  useImperativeHandle,
+} from "react";
 import clsx from "clsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { CSSTransition } from "react-transition-group";
 import { RestorantMenuCategoryNavigationItem } from "types/RestaurantMenu";
 import ExtraNavigationList from "./ExtraNavigationList";
 
+export type ExtraNavigationRef = {
+  offsetLeft: number;
+  offsetWidth: number;
+};
+
 interface IProps {
   extraIndex: number;
   navigations: RestorantMenuCategoryNavigationItem[];
   navigationRefs: React.RefObject<React.RefObject<HTMLLIElement>[]>;
+  activeSelectionId: number | null;
 }
 
-const ExtraNavigation = ({
-  navigations,
-  navigationRefs,
-  extraIndex,
-}: IProps) => {
-  const [expanded, setExpanded] = useState(false);
-  const extraNavigationListRef = useRef<HTMLUListElement>(null);
-  const extraNavigations = navigations.slice(extraIndex);
-  const extraNavigationRefs = navigationRefs.current?.slice(extraIndex) || [];
-  // Из-за абсолютного позиционирования под элементом,
-  // нужно задать ширину равную максимальной ширине таба
-  const maxWidth = Math.max(
-    ...extraNavigationRefs.map(
-      (extraNavigationRef) => extraNavigationRef.current?.offsetWidth || 0
-    ),
-    0
-  );
+const ExtraNavigation = React.forwardRef<ExtraNavigationRef, IProps>(
+  ({ navigations, navigationRefs, extraIndex, activeSelectionId }, ref) => {
+    const [expanded, setExpanded] = useState(false);
+    const extraNavigationRef = useRef<HTMLDivElement>(null);
+    const extraNavigationListRef = useRef<HTMLUListElement>(null);
+    const extraNavigations = navigations.slice(extraIndex);
+    const extraNavigationRefs = navigationRefs.current?.slice(extraIndex) || [];
+    // Из-за абсолютного позиционирования под элементом,
+    // нужно задать ширину равную максимальной ширине таба
+    const maxWidth = Math.max(
+      ...extraNavigationRefs.map(
+        (extraNavigationRef) => extraNavigationRef.current?.offsetWidth || 0
+      ),
+      0
+    );
+    const extraActive = extraNavigations.find(
+      (extraNavigationItem) => extraNavigationItem.id === activeSelectionId
+    );
 
-  const onChangeExpanded = (event: React.MouseEvent<HTMLDivElement>) => {
-    event.stopPropagation(); // stop bubbling react
-    setExpanded((prevState) => !prevState);
-  };
+    const onChangeExpanded = (event: React.MouseEvent<HTMLDivElement>) => {
+      event.stopPropagation(); // stop bubbling react
+      setExpanded((prevState) => !prevState);
+    };
 
-  const onCloseExpanded = useCallback(() => {
-    setExpanded(false);
-  }, [setExpanded]);
+    const onCloseExpanded = useCallback(() => {
+      setExpanded(false);
+    }, [setExpanded]);
 
-  return (
-    <div
-      onClick={onChangeExpanded}
-      className={clsx([
-        "flex",
-        "content-end",
-        "items-center",
-        "cursor-pointer",
-        "relative",
-        "text-gray-700",
-        "transition-colors",
-        expanded ? "text-gray-300" : "hover:text-slate-900",
-      ])}
-    >
-      <span>Ещё</span>
-      <span
+    useImperativeHandle(ref, () => ({
+      offsetLeft: extraNavigationRef.current?.offsetLeft || 0,
+      offsetWidth: extraNavigationRef.current?.offsetWidth || 0,
+    }));
+
+    return (
+      <div
+        ref={extraNavigationRef}
+        onClick={onChangeExpanded}
         className={clsx([
-          "ml-2",
-          "text-xs",
           "flex",
-          "transition-transform",
-          expanded ? "rotate-180" : "rotate-0",
+          "items-center",
+          "cursor-pointer",
+          "relative",
+          "h-full",
+          "text-gray-700",
+          "transition-colors",
+          "ml-4",
+          "px-4",
+          expanded ? "text-gray-300" : "hover:text-slate-900",
+          extraIndex === -1 ? "invisible" : "visible",
         ])}
       >
-        <FontAwesomeIcon icon="chevron-down" />
-      </span>
-      <CSSTransition
-        in={expanded}
-        timeout={100}
-        unmountOnExit
-        classNames={{
-          enter: "opacity-0",
-          enterActive: "opacity-0 translate-x-0 transition duration-100",
-          exit: "opacity-100",
-          exitActive: "opacity-0 scale-90 transition duration-100",
-        }}
-        nodeRef={extraNavigationListRef}
-      >
-        <ExtraNavigationList
-          width={maxWidth}
-          navigations={extraNavigations}
-          onClose={onCloseExpanded}
-          ref={extraNavigationListRef}
-        />
-      </CSSTransition>
-    </div>
-  );
-};
+        <span className="whitespace-nowrap">{extraActive?.title || "Ещё"}</span>
+        <span
+          className={clsx([
+            "ml-2",
+            "text-xs",
+            "flex",
+            "transition-transform",
+            expanded ? "rotate-180" : "rotate-0",
+          ])}
+        >
+          <FontAwesomeIcon icon="chevron-down" />
+        </span>
+        <CSSTransition
+          in={expanded}
+          timeout={100}
+          unmountOnExit
+          classNames={{
+            enter: "opacity-0",
+            enterActive: "opacity-0 translate-x-0 transition duration-100",
+            exit: "opacity-100",
+            exitActive: "opacity-0 scale-90 transition duration-100",
+          }}
+          nodeRef={extraNavigationListRef}
+        >
+          <ExtraNavigationList
+            width={maxWidth}
+            navigations={extraNavigations}
+            onClose={onCloseExpanded}
+            ref={extraNavigationListRef}
+            activeSelectionId={activeSelectionId}
+          />
+        </CSSTransition>
+      </div>
+    );
+  }
+);
 
 const MemoizedExtraNavigation = React.memo(ExtraNavigation);
 

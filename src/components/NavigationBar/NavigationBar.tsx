@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useCallback, useState } from "react";
 import clsx from "clsx";
-import ExtraNavigation from "./ExtraNavigation";
+import ExtraNavigation, { ExtraNavigationRef } from "./ExtraNavigation";
 import NavigationItem from "./NavigationItem";
 import { RestorantMenuCategoryNavigationItem } from "types/RestaurantMenu";
 
@@ -15,31 +15,32 @@ const NavigationBar = ({ navigations }: IProps) => {
   const navigationRefs = useRef<React.RefObject<HTMLLIElement>[]>(
     navigations.map(() => React.createRef<HTMLLIElement>())
   );
-  const borderRef = useRef<HTMLDivElement>(null);
+  const markerRef = useRef<HTMLDivElement>(null);
+  const extraNavigationRef = useRef<ExtraNavigationRef>(null);
   const [activeSectionId, setActiveSectionId] = useState<number | null>(null);
 
   const getExtraIndex = useCallback(() => {
-    const { current: navigation } = navigationRef;
+    const { current: navigationList } = navigationListRef;
 
-    if (!navigation) {
+    if (!navigationList) {
       return;
     }
 
     let totalWidth = 0;
-    const navigationWidth = navigation.clientWidth;
+    const navigationWidth = navigationList.clientWidth;
 
-    const currentExtraIndex = navigations.findIndex((_, index) => {
-      const navigationItem = navigationRefs.current[index].current;
+    const currentExtraIdx = navigations.findIndex((_, index) => {
+      const currentNavigationItem = navigationRefs.current[index].current;
 
-      if (navigationItem) {
-        totalWidth += navigationItem.offsetWidth;
+      if (currentNavigationItem) {
+        totalWidth += currentNavigationItem.offsetWidth;
       }
 
       return totalWidth >= navigationWidth;
     });
 
-    setExtraIndex(currentExtraIndex);
-  }, [setExtraIndex, navigationListRef]);
+    setExtraIndex(currentExtraIdx);
+  }, [setExtraIndex, navigationListRef, activeSectionId]);
 
   useEffect(() => {
     window.addEventListener("resize", getExtraIndex);
@@ -49,6 +50,38 @@ const NavigationBar = ({ navigations }: IProps) => {
       window.removeEventListener("resize", getExtraIndex);
     };
   }, [getExtraIndex]);
+
+  useEffect(() => {
+    const activeSectionIdx = navigations.findIndex(
+      (navigationItem) => navigationItem.id === activeSectionId
+    );
+
+    if (activeSectionIdx !== -1) {
+      const currentNavigationItem =
+        navigationRefs.current[activeSectionIdx].current;
+      const isVisible = activeSectionIdx < extraIndex;
+
+      if (currentNavigationItem) {
+        document.documentElement.style.setProperty(
+          "--markerWidth",
+          `${
+            isVisible
+              ? currentNavigationItem.offsetWidth
+              : extraNavigationRef?.current?.offsetWidth
+          }px`
+        );
+
+        document.documentElement.style.setProperty(
+          "--markerLeft",
+          `${
+            isVisible
+              ? currentNavigationItem.offsetLeft
+              : extraNavigationRef?.current?.offsetLeft
+          }px`
+        );
+      }
+    }
+  }, [activeSectionId, extraIndex]);
 
   useEffect(() => {
     const { current: navigation } = navigationRef;
@@ -83,6 +116,7 @@ const NavigationBar = ({ navigations }: IProps) => {
 
     const observer = new IntersectionObserver(observerCallback, {
       threshold: [0, 0.25, 0.5, 0.75, 1],
+      rootMargin: `-${navigation.offsetHeight}px 0px 0px 0px`,
     });
 
     function observerCallback(entries: IntersectionObserverEntry[]) {
@@ -156,7 +190,7 @@ const NavigationBar = ({ navigations }: IProps) => {
           transform: "translate3d(var(--markerLeft, 0), 0, 0)",
           width: "var(--markerWidth, 0)",
         }}
-        ref={borderRef}
+        ref={markerRef}
       />
       <ul
         className={clsx([
@@ -177,13 +211,13 @@ const NavigationBar = ({ navigations }: IProps) => {
           />
         ))}
       </ul>
-      {extraIndex !== -1 && (
-        <ExtraNavigation
-          navigations={navigations}
-          extraIndex={extraIndex}
-          navigationRefs={navigationRefs}
-        />
-      )}
+      <ExtraNavigation
+        navigations={navigations}
+        extraIndex={extraIndex}
+        navigationRefs={navigationRefs}
+        activeSelectionId={activeSectionId}
+        ref={extraNavigationRef}
+      />
     </div>
   );
 };

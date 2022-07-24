@@ -11,11 +11,11 @@ const MenuItem = ({ item }: IProps) => {
         <div className="flex items-center">
           <h4>{item.title}</h4>
           {item.weight && (
-            <span className="text-sm text-gray-400 ml-2">{`${item.weight} г`}</span>
+            <span className="whitespace-nowrap text-sm text-gray-400 ml-2">{`${item.weight} г`}</span>
           )}
         </div>
         {item.price && (
-          <span className="whitespace-nowrap">{`${item.price} ₽`}</span>
+          <span className="whitespace-nowrap ml-2 flex items-center">{`${item.price} ₽`}</span>
         )}
       </div>
       <div

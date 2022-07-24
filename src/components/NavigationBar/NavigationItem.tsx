@@ -1,8 +1,8 @@
 import clsx from "clsx";
-import React, { MutableRefObject } from "react";
-import { useEffect } from "react";
+import React, { useImperativeHandle } from "react";
 import getElementCoords from "utils/getElementCoords";
 import { RestorantMenuCategoryNavigationItem } from "types/RestaurantMenu";
+import { useRef } from "react";
 
 interface IProps {
   item: RestorantMenuCategoryNavigationItem;
@@ -22,22 +22,6 @@ const NavigationItem = React.forwardRef<HTMLLIElement, IProps>(
         window.scrollTo({ top: y, behavior: "smooth" });
       }
     };
-
-    useEffect(() => {
-      const { current: navItem } =
-        ref as MutableRefObject<HTMLLIElement | null>;
-
-      if (active && navItem) {
-        document.documentElement.style.setProperty(
-          "--markerWidth",
-          `${navItem.offsetWidth}px`
-        );
-        document.documentElement.style.setProperty(
-          "--markerLeft",
-          `${navItem.offsetLeft}px`
-        );
-      }
-    }, [active]);
 
     return (
       <li
