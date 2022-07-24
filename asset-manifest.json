@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/ya-eda/static/css/main.040de78b.css",
+    "main.js": "/ya-eda/static/js/main.1117c912.js",
+    "static/js/787.93151bc6.chunk.js": "/ya-eda/static/js/787.93151bc6.chunk.js",
+    "index.html": "/ya-eda/index.html",
+    "main.040de78b.css.map": "/ya-eda/static/css/main.040de78b.css.map",
+    "main.1117c912.js.map": "/ya-eda/static/js/main.1117c912.js.map",
+    "787.93151bc6.chunk.js.map": "/ya-eda/static/js/787.93151bc6.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.040de78b.css",
+    "static/js/main.1117c912.js"
+  ]
+}
