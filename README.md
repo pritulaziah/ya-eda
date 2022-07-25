@@ -4,6 +4,7 @@
 - IntersectionObserver scroll spy
 - Sticky header
 - Calculate navigations extra items
+- Lazy loading images
 
 # Install
 
