@@ -1,5 +1,6 @@
 # Features:
 
+- Clone by <a href="https://eda.yandex.ru/tumen/r/kfc_ru?placeSlug=kfc_pyuwg">eda yandex</a>
 - IntersectionObserver scroll spy
 - Sticky header
 - Calculate navigations extra items
