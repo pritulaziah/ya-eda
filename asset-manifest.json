@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/ya-eda/static/css/main.5607ba52.css",
-    "main.js": "/ya-eda/static/js/main.e86c9513.js",
+    "main.css": "/ya-eda/static/css/main.ceac4f0d.css",
+    "main.js": "/ya-eda/static/js/main.3a0caf5e.js",
     "static/js/787.93151bc6.chunk.js": "/ya-eda/static/js/787.93151bc6.chunk.js",
     "index.html": "/ya-eda/index.html",
-    "main.5607ba52.css.map": "/ya-eda/static/css/main.5607ba52.css.map",
-    "main.e86c9513.js.map": "/ya-eda/static/js/main.e86c9513.js.map",
+    "main.ceac4f0d.css.map": "/ya-eda/static/css/main.ceac4f0d.css.map",
+    "main.3a0caf5e.js.map": "/ya-eda/static/js/main.3a0caf5e.js.map",
     "787.93151bc6.chunk.js.map": "/ya-eda/static/js/787.93151bc6.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.5607ba52.css",
-    "static/js/main.e86c9513.js"
+    "static/css/main.ceac4f0d.css",
+    "static/js/main.3a0caf5e.js"
   ]
 }
