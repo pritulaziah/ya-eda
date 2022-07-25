@@ -30,7 +30,7 @@ const useClickOutside = <
       document.removeEventListener(eventName, handleClickOutside, {
         capture: useCapture,
       });
-  }, [onClickOutside, ref]);
+  }, [onClickOutside, ref, eventName, useCapture]);
 };
 
 export default useClickOutside;

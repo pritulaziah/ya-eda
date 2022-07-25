@@ -87,7 +87,7 @@ const NavigationBar = ({ navigations }: IProps) => {
         );
       }
     }
-  }, [activeSectionId, extraIndex]);
+  }, [activeSectionId, extraIndex, navigations]);
 
   useEffect(() => {
     const { current: navigation } = navigationRef;
@@ -163,7 +163,7 @@ const NavigationBar = ({ navigations }: IProps) => {
 
       observer.disconnect();
     };
-  }, []);
+  }, [navigations]);
 
   return (
     <div

@@ -54,7 +54,13 @@ const Img = ({
       didCancel = true;
       observer.unobserve(image);
     };
-  }, [lazy, inView]);
+  }, [
+    lazy,
+    inView,
+    intersectionOptions.threshold,
+    intersectionOptions.root,
+    intersectionOptions.rootMargin,
+  ]);
 
   const onLoad = () => {
     loadImage && imageRef.current && loadImage(imageRef.current);

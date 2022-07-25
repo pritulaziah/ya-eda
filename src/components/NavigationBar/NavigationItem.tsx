@@ -1,8 +1,7 @@
 import clsx from "clsx";
-import React, { useImperativeHandle } from "react";
+import React from "react";
 import getElementCoords from "utils/getElementCoords";
 import { RestorantMenuCategoryNavigationItem } from "types/RestaurantMenu";
-import { useRef } from "react";
 
 interface IProps {
   item: RestorantMenuCategoryNavigationItem;
