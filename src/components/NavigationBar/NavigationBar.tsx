@@ -9,15 +9,15 @@ interface IProps {
 }
 
 const NavigationBar = ({ navigations }: IProps) => {
+  const [extraIndex, setExtraIndex] = useState(-1);
+  const [activeSectionId, setActiveSectionId] = useState<number | null>(null);
   const navigationRef = useRef<HTMLDivElement>(null);
   const navigationListRef = useRef<HTMLUListElement>(null);
-  const [extraIndex, setExtraIndex] = useState(-1);
   const navigationRefs = useRef<React.RefObject<HTMLLIElement>[]>(
     navigations.map(() => React.createRef<HTMLLIElement>())
   );
   const markerRef = useRef<HTMLDivElement>(null);
   const extraNavigationRef = useRef<ExtraNavigationRef>(null);
-  const [activeSectionId, setActiveSectionId] = useState<number | null>(null);
 
   const getExtraIndex = useCallback(() => {
     const { current: navigationList } = navigationListRef;
@@ -40,7 +40,13 @@ const NavigationBar = ({ navigations }: IProps) => {
     });
 
     setExtraIndex(currentExtraIdx);
-  }, [setExtraIndex, navigationListRef, activeSectionId]);
+  }, [setExtraIndex, navigationListRef, activeSectionId, navigations]);
+
+  useEffect(() => {
+    navigationRefs.current = navigations.map(() =>
+      React.createRef<HTMLLIElement>()
+    );
+  }, [navigations]);
 
   useEffect(() => {
     window.addEventListener("resize", getExtraIndex);
