@@ -33,6 +33,7 @@ npm start
   - [ ] navigations
   - [ ] extra navigation items
   - [ ] list restaurant categories with menu
-- [x] Optionmisation features
+- [ ] Optimization features
   - [x] lazy load images
+  - [ ] check unnecessary re-renders
 - [ ] Bugs
