@@ -4,10 +4,7 @@ import { RestorantMenuCategory } from "types/RestaurantMenu";
 import menuCategories from "fakeData.json";
 
 const navigations = (menuCategories as RestorantMenuCategory[]).map(
-  (menuCategory) => ({
-    id: menuCategory.id,
-    title: menuCategory.title,
-  })
+  ({ id, title }) => ({ id, title })
 );
 
 function App() {

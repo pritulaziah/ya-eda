@@ -1,3 +1,4 @@
+import Img from "components/Img/Img";
 import { RestorantMenuItem } from "types/RestaurantMenu";
 
 interface IProps {
@@ -23,9 +24,10 @@ const MenuItem = ({ item }: IProps) => {
         dangerouslySetInnerHTML={{ __html: item.description }}
       />
       <div className="flex flex-1">
-        <img
+        <Img
           className="w-full h-full object-contain"
           src={`https://eda.yandex/images${item.image}`}
+          altSrc="https://yastatic.net/s3/eda-front/www/assets/desktop.light.a623a0604d5b8e0630de.svg"
         />
       </div>
     </div>
