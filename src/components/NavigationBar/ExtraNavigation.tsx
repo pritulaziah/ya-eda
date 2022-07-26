@@ -1,9 +1,4 @@
-import React, {
-  useRef,
-  useState,
-  useCallback,
-  useImperativeHandle,
-} from "react";
+import React, { useRef, useState, useImperativeHandle } from "react";
 import clsx from "clsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { CSSTransition } from "react-transition-group";
@@ -29,8 +24,7 @@ const ExtraNavigation = React.forwardRef<ExtraNavigationRef, IProps>(
     const extraNavigationListRef = useRef<HTMLUListElement>(null);
     const extraNavigations = navigations.slice(extraIndex);
     const extraNavigationRefs = navigationRefs.current?.slice(extraIndex) || [];
-    // Из-за абсолютного позиционирования под элементом,
-    // нужно задать ширину равную максимальной ширине таба
+    // coz absolute position element we need set width equals max width tab
     const maxWidth = Math.max(
       ...extraNavigationRefs.map(
         (extraNavigationRef) => extraNavigationRef.current?.offsetWidth || 0
@@ -41,19 +35,19 @@ const ExtraNavigation = React.forwardRef<ExtraNavigationRef, IProps>(
       (extraNavigationItem) => extraNavigationItem.id === activeSelectionId
     );
 
+    useImperativeHandle(ref, () => ({
+      offsetLeft: extraNavigationRef.current?.offsetLeft || 0,
+      offsetWidth: extraNavigationRef.current?.offsetWidth || 0,
+    }));
+
     const onChangeExpanded = (event: React.MouseEvent<HTMLDivElement>) => {
       event.stopPropagation(); // stop bubbling react
       setExpanded((prevState) => !prevState);
     };
 
-    const onCloseExpanded = useCallback(() => {
+    const onCloseExpanded = () => {
       setExpanded(false);
-    }, [setExpanded]);
-
-    useImperativeHandle(ref, () => ({
-      offsetLeft: extraNavigationRef.current?.offsetLeft || 0,
-      offsetWidth: extraNavigationRef.current?.offsetWidth || 0,
-    }));
+    };
 
     return (
       <div

@@ -16,7 +16,6 @@ const NavigationBar = ({ navigations }: IProps) => {
   const navigationRefs = useRef<React.RefObject<HTMLLIElement>[]>(
     navigations.map(() => React.createRef<HTMLLIElement>())
   );
-  const markerRef = useRef<HTMLDivElement>(null);
   const extraNavigationRef = useRef<ExtraNavigationRef>(null);
 
   const getExtraIndex = useCallback(() => {
@@ -58,34 +57,37 @@ const NavigationBar = ({ navigations }: IProps) => {
   }, [getExtraIndex]);
 
   useEffect(() => {
+    // i think maybe add thus func bind with resize event?
     const activeSectionIdx = navigations.findIndex(
       (navigationItem) => navigationItem.id === activeSectionId
     );
 
-    if (activeSectionIdx !== -1) {
-      const currentNavigationItem =
-        navigationRefs.current[activeSectionIdx].current;
-      const isVisible = activeSectionIdx < extraIndex;
+    if (activeSectionIdx === -1) {
+      return;
+    }
 
-      if (currentNavigationItem) {
-        document.documentElement.style.setProperty(
-          "--markerWidth",
-          `${
-            isVisible
-              ? currentNavigationItem.offsetWidth
-              : extraNavigationRef?.current?.offsetWidth
-          }px`
-        );
+    const currentNavigationItem =
+      navigationRefs.current[activeSectionIdx].current;
+    const isVisible = activeSectionIdx < extraIndex;
 
-        document.documentElement.style.setProperty(
-          "--markerLeft",
-          `${
-            isVisible
-              ? currentNavigationItem.offsetLeft
-              : extraNavigationRef?.current?.offsetLeft
-          }px`
-        );
-      }
+    if (currentNavigationItem) {
+      document.documentElement.style.setProperty(
+        "--markerWidth",
+        `${
+          isVisible
+            ? currentNavigationItem.offsetWidth
+            : extraNavigationRef?.current?.offsetWidth
+        }px`
+      );
+
+      document.documentElement.style.setProperty(
+        "--markerLeft",
+        `${
+          isVisible
+            ? currentNavigationItem.offsetLeft
+            : extraNavigationRef?.current?.offsetLeft
+        }px`
+      );
     }
   }, [activeSectionId, extraIndex, navigations]);
 
@@ -196,7 +198,6 @@ const NavigationBar = ({ navigations }: IProps) => {
           transform: "translate3d(var(--markerLeft, 0), 0, 0)",
           width: "var(--markerWidth, 0)",
         }}
-        ref={markerRef}
       />
       <ul
         className={clsx([

@@ -25,7 +25,7 @@ const MenuItem = ({ item }: IProps) => {
       />
       <div className="flex flex-1">
         <Img
-          className="h-60 object-contain" // fixed height another need change scroll to logic
+          className="h-60 object-contain" // fixed height! another need change scroll logic
           src={`https://eda.yandex/images${item.image}`}
           altSrc="https://yastatic.net/s3/eda-front/www/assets/desktop.light.a623a0604d5b8e0630de.svg"
         />

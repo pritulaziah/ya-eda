@@ -48,4 +48,6 @@ const NavigationItem = React.forwardRef<HTMLLIElement, IProps>(
 
 const MemoizedNavigationItem = React.memo(NavigationItem);
 
+MemoizedNavigationItem.displayName = "NavigationItem";
+
 export default MemoizedNavigationItem;
